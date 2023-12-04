@@ -1,0 +1,50 @@
+module id with "get" is
+
+(* Data type for identifiers, useful for scheduling purposes *)
+type ID is
+Process_1d98b25,
+Gateway_1lv3hhx,
+Activity_0kc9wwe,
+Activity_1qxkkp1,
+Gateway_1fo2bsw,
+Gateway_1c4j4m7,
+Activity_0epqpmr,
+Activity_11dyr52,
+Gateway_19538cr,
+Activity_0hiyjzm,
+Gateway_0y1348f,
+Gateway_042ci2z,
+Activity_0yxn8wz,
+Gateway_019rnbt,
+Activity_1bq5cpr,
+Activity_0ulzvxy,
+Gateway_0z53ddp,
+Activity_1q6jsaf,
+StartEvent_0nonjmw,
+Event_09dry7f, 
+Flow_0bx1ubc, 
+Flow_0kohk1o, 
+Flow_0iosq71, 
+Flow_1hlfgv9, 
+Flow_0d5no77, 
+Flow_018red4, 
+Flow_113zrno, 
+Flow_065csqe, 
+Flow_0bkpr52, 
+Flow_0a4okos, 
+Flow_1fx42tr, 
+Flow_0am09oq, 
+Flow_1q6kbg5, 
+Flow_1dism3f, 
+Flow_0hxtdgl, 
+Flow_06jns5l, 
+Flow_1s6rirj, 
+Flow_1ugla8m, 
+Flow_1vqpcs6, 
+Flow_12tsovj, 
+Flow_1m57uqk, 
+Flow_0b21o2y, DummyId
+with "==","!="
+end type
+
+end module

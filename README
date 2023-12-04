@@ -1,0 +1,27 @@
+This repository contains a tool aiming at automatically repairing incorrect LNT specifications with regards to single eventually properties.
+The tool can be used directly on deterministic LTS specified in the .aut format (caution: extension of the file must be .daut).
+Otherwise, the user can specify an LNT specification, but must have the CADP toolbox [1] installed on its computer along with a valid LICENSE file for its usage.
+Some examples are available in the EXAMPLES folder and can be used directly to have an overview of the tool.
+
+To try the tool, just use the following command: python main.py <working_directory>.
+The working directory should contain an LNT specification or an LTS in the AUT format, along with an MCL property.
+The property has to match the syntax "INEVITABLE("the_task_you_want_to_be_executed")".
+The process will print on the standard output the possible patches, along with the execution times of each steps.
+It will also generate a file called "<your_process_name>.fautx" containing the CLTS analyzed to propose the
+patches, and a file called "<your_process_name>_truncated.fautx" containing a truncated version of the previous CLTS
+allowing a better analysis.
+If these files already exist, they will not be overwritten, unless you pass the argument "-f" to the command line.
+You can of course redirect the output of this program by adding a "> <your_file>" at the end of the command line.
+You can also add an optional argument "-v" (for verbose), which will give you more insights about what the process
+is currently doing.
+Finally, the user can specify a time bound by passing the argument "-bound=<your_bound_in_seconds>" to the command line.
+The bound works as follows: while no patch is found, the bound is ignored. When a patch is found, and if the bound was reached,
+the patch is returned immediatly, with the eventuality of not being optimal.
+
+Code variations:
+- One can modify the heuristic used to find patches in case of impacting the already green part of the LTS by
+    changing the constant Heuristic.LESS_IMPACT_ON_GREEN_PART in "main.py" line 73
+- One can modify the type of truncature of the truncated CLTS by changing the constant Truncature.FULL_AFTER_LIVENESS
+    in "main.py" line 84
+
+[1]: Hubert Garavel, Frédéric Lang, Radu Mateescu, and Wendelin Serwe. 2013. CADP 2011: A Toolbox for the Construction and Analysis of Distributed Processes. STTT 15, 2 (2013), 89–107.

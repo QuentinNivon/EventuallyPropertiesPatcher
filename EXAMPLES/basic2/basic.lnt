@@ -1,0 +1,26 @@
+module basic is
+
+process MAIN [A, B, C, D, E, F, G, H, X: any] is
+    select
+        A;
+        par
+            C
+        ||
+            D
+        end par;
+        E
+    []
+        loop
+            B;
+            select
+                F
+            []
+                G
+            end select;
+            H
+        end loop
+    end select;
+    X
+end process
+
+end module

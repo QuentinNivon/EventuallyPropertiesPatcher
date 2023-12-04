@@ -1,0 +1,62 @@
+module EXBAD1 is
+
+process Main [ EXEC,EXEC0,EXEC1,EXEC2,EXEC3,EXEC4,EXEC5,EXEC6,EXEC7,EXEC8,EXEC9,EXECa,EXEC0a,EXEC1a,EXEC2a,EXEC3a,EXEC4a,EXEC5a,EXEC6a,EXEC7a,EXEC8a,EXEC9a,EXECb,EXEC0b,EXEC1b,EXEC2b,EXEC3b,EXEC4b,EXEC5b,EXEC6b,EXEC7b,EXEC8b,EXEC9b: any,
+               INIT1,INIT2,INIT3: any,
+               CLOSE1,CLOSE2,CLOSE3,CLOSE4,CLOSE5,CLOSE6,CLOSE7,CLOSE8,CLOSE1a,CLOSE2a,CLOSE3a,CLOSE4a,CLOSE5a,CLOSE6a,CLOSE7a,CLOSE8a,CLOSE1b,CLOSE2b,CLOSE3b:any,
+               CAUSE,OHMY,NEVER,OHMYa,NEVERa,OHMYb,NEVERb,OHMYc,NEVERc: any] is
+
+   INIT1 ; INIT2 ; INIT3 ;
+
+   select
+
+      EXEC1 ; EXEC2 ; CAUSE ;   (* first action *)
+      select
+          par EXEC3 ; EXEC4 ; EXEC5 || OHMY end par    (* second action *)
+      []
+          par EXEC6 ; EXEC7 || EXEC8 ; EXEC9 end par
+      end select ;
+      CLOSE1 ; CLOSE2 ; CLOSE3 ;
+      select
+          CLOSE4 ; par CLOSE5 ; CLOSE6 || NEVER end par (* third action *)
+      []
+          par CLOSE7 || CLOSE8 end par
+      end select
+
+  []
+
+        EXEC0 ; EXEC2a ; CAUSE ;   (* first action *)
+        select
+            EXEC3a ; EXEC4a ; EXEC5a ; OHMYa   (* second action *)
+        []
+            EXEC6a ; EXEC7a
+        []
+            EXEC8a ; EXEC9a
+        end select ;
+        CLOSE1a ; CLOSE2a ; CLOSE3a ;
+        select
+            CLOSE4a ; CLOSE5
+        []
+            CLOSE6a ; NEVERa (* third action *)
+        end select ;
+        par
+           CLOSE7a
+        ||
+           select NEVERb [] CLOSE8a end select  (* third action *)
+        end par
+  []
+        EXEC ; EXEC0a ; EXEC1a ;
+        select
+           par
+              EXEC3b
+           ||
+              CAUSE ; EXEC4b ; OHMYb ; EXEC5b ; NEVERc (* all 3 actions *)
+           end par
+        []
+           CLOSE1b ; CLOSE2b ; CLOSE3b
+        end select
+
+  end select
+
+end process
+
+end module

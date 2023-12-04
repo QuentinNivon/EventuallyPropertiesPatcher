@@ -1,0 +1,215 @@
+module ifttt9 with "get" is
+
+(* Objects and buffers when necessary *)
+
+(* Motion sensor *)
+
+process motion [movein: any, moveout: any] is
+  loop
+    select
+      movein
+    []
+      moveout
+    end select
+  end loop
+end process
+
+(* Light *)
+
+process light [lighton_read: any, lightoff_read: any] is
+  loop
+      select
+        lighton_read
+      []
+        lightoff_read
+      end select
+  end loop
+end process
+
+process queuelight [lighton_read: any, lightoff_read: any, lighton: any, lightoff: any] is
+  loop
+    select
+      lighton ; lighton_read
+    []
+      lightoff ; lightoff_read
+    end select
+  end loop
+end process
+
+(* Temperature sensor *)
+
+process temperature [warm: any, cold: any] is
+  loop
+    select
+      warm
+    []
+      cold
+    end select
+  end loop
+end process
+
+(* Window *)
+
+process window [openwindow_read: any, closewindow_read: any] is
+  loop
+      select
+        openwindow_read
+      []
+        closewindow_read
+      end select
+  end loop
+end process
+
+process queuewindow [openwindow_read: any, closewindow_read: any, openwindow: any, closewindow: any] is
+  loop
+    select
+      openwindow ; openwindow_read
+    []
+      closewindow ; closewindow_read
+    end select
+  end loop
+end process
+
+(* Time alert *)
+
+process time [early: any, late: any] is
+  loop
+    select
+      early
+    []
+      late
+    end select
+  end loop
+end process
+
+(* Switch box *)
+
+process switchbox [switchon_read: any, switchoff_read: any] is
+  loop
+      select
+        switchon_read
+      []
+        switchoff_read
+      end select
+  end loop
+end process
+
+process queueswitchbox [switchon_read: any, switchoff_read: any, switchon: any, switchoff: any] is
+  loop
+    select
+      switchon ; switchon_read
+    []
+      switchoff ; switchoff_read
+    end select
+  end loop
+end process
+
+
+(* IFTTT rules *)
+
+process rules [ lighton: any, lightoff: any, movein, moveout: any,
+                warm: any, cold: any, openwindow: any, closewindow: any, early: any, late: any,
+                switchon: any, switchoff: any, INIT, dummy1, dummy2, dummy3:any, log:any
+              ] is
+(*  loop  *)
+
+var x: Nat in
+   select 
+     lighton;
+     select switchoff [] dummy1 end select
+   []
+     INIT
+   end select;
+   x:=1 ;
+   while (x==1) loop
+
+            select
+
+               movein ;
+               lighton ;
+               log
+            []  (* bug -> sequence is required here *)
+               moveout ;
+               lightoff ;
+               log
+            []
+               warm ;
+               openwindow ;
+               log
+            []
+               cold ;
+               closewindow
+            []    (* bug -> buggy rule to be removed *)
+              lighton
+            []
+              lightoff
+            []
+              late ;
+              x:=0;
+              select switchoff [] dummy2 end select
+
+          end select
+
+    end loop;
+
+    early ;
+    switchon;
+
+    (* and possibly call 'rules' again *)
+    lighton;
+    select switchoff [] dummy3 end select
+end var
+
+      (* ; -> ; *)
+      (* choice -> select *)
+      (* interleaving -> par *)
+      (* *k -> while *)
+
+(*  end loop  *)
+
+end process
+
+(* Main process *)
+
+process MAIN [ movein: any, moveout: any, lighton: any, lightoff: any,
+               lighton_read: any, lightoff_read: any, warm: any, cold: any,
+               openwindow_read: any, closewindow_read: any, openwindow: any, closewindow: any,
+               early: any, late: any,
+               switchon_read: any, switchoff_read: any, switchon: any, switchoff: any, INIT, dummy1, dummy2, dummy3:any, log:any
+               ] is
+
+ par  movein, moveout, lighton, lightoff, warm, cold, openwindow, closewindow, early, late, switchon, switchoff in
+    rules [lighton, lightoff, movein, moveout, warm, cold, openwindow, closewindow, early, late, switchon, switchoff, INIT, dummy1,dummy2,dummy3,log]
+ ||
+  par
+     motion [movein, moveout]
+  ||
+     par lighton_read, lightoff_read in
+          light [lighton_read, lightoff_read]
+     ||
+          queuelight [lighton_read, lightoff_read, lighton, lightoff]
+     end par
+  ||
+     temperature [warm, cold]
+  ||
+     par openwindow_read, closewindow_read in
+          window [openwindow_read, closewindow_read]
+     ||
+          queuewindow [openwindow_read, closewindow_read, openwindow, closewindow]
+     end par
+  ||
+     time [early, late]
+  ||
+     par switchon_read, switchoff_read in
+          switchbox [switchon_read, switchoff_read]
+     ||
+          queueswitchbox [switchon_read, switchoff_read, switchon, switchoff]
+     end par
+
+  end par
+
+ end par
+
+end process
+
+end module

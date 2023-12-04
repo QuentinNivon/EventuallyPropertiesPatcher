@@ -1,0 +1,50 @@
+module BACKWARD1 is
+
+process Main [ EXEC,EXEC0,EXEC1,EXEC2,EXEC3,EXEC4,EXEC5,EXEC6,EXEC7,EXEC8,EXEC9,EXEC10,EXEC11: any,
+               AA,BB,CC,DD,EE,FF,GG,HH,JJ,KK,LL,MM,NN:any,
+               DUM1,DUM2,DUM3:any,
+               CAUSE,OHMY,NEVER: any] is
+
+   DUM1 ; DUM2 ;
+
+   select
+
+      EXEC1 ; EXEC2 ;   (* first action *)
+      select
+          par EXEC3 || EXEC4 ; EXEC5 end par    (* second action *)
+      []
+          par EXEC6 ; EXEC7 ; KK || EXEC8 ; EXEC9 end par
+      end select ;
+      EXEC10 ; EXEC11 ;
+      select
+          EXEC ; EXEC0
+      []
+        DUM1 ; DUM2 ; DUM3 ;
+        NEVER  (* third action *)
+      end select
+
+  []
+        AA ; BB ; CC ; DD ; EE ;
+        select
+              FF
+        []
+              CAUSE ; HH ; (* first action *)
+              select
+                   JJ ; OHMY ;  (* second action *)
+                   select
+                      KK
+                   []
+                       LL ; MM  (* third action *)
+                   end select
+              []
+                 NN
+              end select
+        []
+              GG
+        end select
+
+  end select
+
+end process
+
+end module

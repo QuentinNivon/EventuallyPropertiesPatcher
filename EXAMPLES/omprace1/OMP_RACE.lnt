@@ -1,0 +1,21 @@
+module OMP_RACE is
+	process MAIN[WU0, WU1, WU2, WU3, WU4, WU5, WU6, WU7, G, H:none] is 
+		WU0;		
+		par G in
+			WU1;G
+		||
+			WU2;G
+		||
+			WU3;G
+		||
+			WU4;G
+		|| 
+			WU5;G
+        ||
+            select
+                WU6 [] H
+            end select
+		end par;
+		WU7
+	end process
+end module

@@ -1,0 +1,235 @@
+module Process_1d98b25(bpmntypes) with "get" is
+
+process init [begin:any, outf:any] is
+ var ident: ID in begin ; outf (?ident of ID) end var 
+end process
+
+process final [incf:any, finish:any] is
+var ident: ID in 
+loop 
+incf (?ident of ID); finish 
+end loop
+end var
+end process
+
+process flow [begin:any, finish:any] (ident: ID) is
+ loop begin (!ident) ; finish (!ident) end loop
+end process
+
+process xorsplit_Gateway_1lv3hhx [incf:any,outf_1:any,outf_2:any ] is 
+ var ident: ID in loop incf (?ident of ID); 
+ select outf_1(?ident of ID)[]outf_2(?ident of ID) end select end loop end var
+end process
+
+process task_1_1 [incf:any,task:any,outf:any] is
+ var ident: ID in loop  incf (?ident of ID); task ;  outf (?ident of ID) end loop end var
+end process
+
+process xorjoin_Gateway_1fo2bsw [incf_1:any,incf_2:any,outf:any] is 
+ var ident: ID in loop select incf_1 (?ident of ID)[]incf_2 (?ident of ID) end select ; outf (?ident of ID) end loop end var 
+end process
+
+process xorsplit_Gateway_1c4j4m7 [incf:any,outf_1:any,outf_2:any ] is 
+ var ident: ID in loop incf (?ident of ID); 
+ select outf_1(?ident of ID)[]outf_2(?ident of ID) end select end loop end var
+end process
+
+process xorjoin_Gateway_19538cr [incf_1:any,incf_2:any,outf:any] is 
+ var ident: ID in loop select incf_1 (?ident of ID)[]incf_2 (?ident of ID) end select ; outf (?ident of ID) end loop end var 
+end process
+
+process xorsplit_Gateway_0y1348f [incf:any,outf_1:any,outf_2:any ] is 
+ var ident: ID in loop incf (?ident of ID); 
+ select outf_1(?ident of ID)[]outf_2(?ident of ID) end select end loop end var
+end process
+
+process xorjoin_Gateway_042ci2z [incf_1:any,incf_2:any,outf:any] is 
+ var ident: ID in loop select incf_1 (?ident of ID)[]incf_2 (?ident of ID) end select ; outf (?ident of ID) end loop end var 
+end process
+
+process andsplit_Gateway_019rnbt [incf:any,outf_1:any,outf_2:any ] is 
+ var ident2:ID,ident1:ID in  var ident: ID in loop incf (?ident of ID); 
+ par outf_1(?ident2 of ID)||outf_2(?ident1 of ID) end par end loop end var end var
+end process
+
+process andjoin_Gateway_0z53ddp [incf_1:any,incf_2:any,outf:any] is 
+ var ident2:ID,ident1:ID in  var ident:ID in loop par incf_1 (?ident2 of ID)||incf_2 (?ident1 of ID) end par ; outf (?ident of ID) end loop end var end var 
+end process
+
+
+process scheduler [Flow_0bx1ubc_begin:any, Flow_0bx1ubc_finish:any, Flow_0kohk1o_begin:any, Flow_0kohk1o_finish:any, Flow_0iosq71_begin:any, Flow_0iosq71_finish:any, Flow_1hlfgv9_begin:any, Flow_1hlfgv9_finish:any, Flow_0d5no77_begin:any, Flow_0d5no77_finish:any, Flow_018red4_begin:any, Flow_018red4_finish:any, Flow_113zrno_begin:any, Flow_113zrno_finish:any, Flow_065csqe_begin:any, Flow_065csqe_finish:any, Flow_0bkpr52_begin:any, Flow_0bkpr52_finish:any, Flow_0a4okos_begin:any, Flow_0a4okos_finish:any, Flow_1fx42tr_begin:any, Flow_1fx42tr_finish:any, Flow_0am09oq_begin:any, Flow_0am09oq_finish:any, Flow_1q6kbg5_begin:any, Flow_1q6kbg5_finish:any, Flow_1dism3f_begin:any, Flow_1dism3f_finish:any, Flow_0hxtdgl_begin:any, Flow_0hxtdgl_finish:any, Flow_06jns5l_begin:any, Flow_06jns5l_finish:any, Flow_1s6rirj_begin:any, Flow_1s6rirj_finish:any, Flow_1ugla8m_begin:any, Flow_1ugla8m_finish:any, Flow_1vqpcs6_begin:any, Flow_1vqpcs6_finish:any, Flow_12tsovj_begin:any, Flow_12tsovj_finish:any, Flow_1m57uqk_begin:any, Flow_1m57uqk_finish:any, Flow_0b21o2y_begin:any, Flow_0b21o2y_finish:any, MoveOn:any] (activeflows: IDS, bpmn: BPROCESS, syncstore: IDS, mergestore:IDS, parstore:IDS) is
+var ident: ID,ident1: ID,ident2: ID,ident3: ID, mergeid: ID in 
+select 
+(*---------- Initial node ---------------------*)
+Flow_0bx1ubc_begin (?ident1 of ID);scheduler [...](union({ident1}, remove_ids_from_set({}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+
+(*----  XOrSplitGateway with ID: Gateway_1lv3hhx------*)
+Flow_0bx1ubc_finish (?ident1 of ID);  select
+Flow_0kohk1o_begin (?ident2 of ID); scheduler [...](union({ident2}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+[]
+Flow_0iosq71_begin (?ident3 of ID); scheduler [...](union({ident3}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+end select 
+[]
+(*----  Task with ID: Activity_0kc9wwe------*)
+Flow_0kohk1o_finish (?ident1 of ID); Flow_0hxtdgl_begin (?ident2 of ID);scheduler [...](union({ident2}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+(*----  Task with ID: Activity_1qxkkp1------*)
+Flow_1hlfgv9_finish (?ident1 of ID); Flow_0d5no77_begin (?ident2 of ID);scheduler [...](union({ident2}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+(*----  XOrJoinGateway with ID: Gateway_1fo2bsw------*)
+ select
+Flow_0iosq71_finish (?ident2 of ID) 
+[]
+Flow_1dism3f_finish (?ident2 of ID) 
+end select; Flow_1hlfgv9_begin (?ident1 of ID);scheduler [...](union({ident1}, remove_ids_from_set({ident2}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+(*----  XOrSplitGateway with ID: Gateway_1c4j4m7------*)
+Flow_0d5no77_finish (?ident1 of ID);  select
+Flow_018red4_begin (?ident2 of ID); scheduler [...](union({ident2}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+[]
+Flow_113zrno_begin (?ident3 of ID); scheduler [...](union({ident3}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+end select 
+[]
+(*----  Task with ID: Activity_0epqpmr------*)
+Flow_018red4_finish (?ident1 of ID); Flow_065csqe_begin (?ident2 of ID);scheduler [...](union({ident2}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+(*----  Task with ID: Activity_11dyr52------*)
+Flow_113zrno_finish (?ident1 of ID); Flow_0bkpr52_begin (?ident2 of ID);scheduler [...](union({ident2}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+(*----  XOrJoinGateway with ID: Gateway_19538cr------*)
+ select
+Flow_065csqe_finish (?ident2 of ID) 
+[]
+Flow_0bkpr52_finish (?ident2 of ID) 
+end select; Flow_0a4okos_begin (?ident1 of ID);scheduler [...](union({ident1}, remove_ids_from_set({ident2}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+(*----  Task with ID: Activity_0hiyjzm------*)
+Flow_0a4okos_finish (?ident1 of ID); Flow_1fx42tr_begin (?ident2 of ID);scheduler [...](union({ident2}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+(*----  XOrSplitGateway with ID: Gateway_0y1348f------*)
+Flow_1fx42tr_finish (?ident1 of ID);  select
+Flow_0am09oq_begin (?ident2 of ID); scheduler [...](union({ident2}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+[]
+Flow_1dism3f_begin (?ident3 of ID); scheduler [...](union({ident3}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+end select 
+[]
+(*----  XOrJoinGateway with ID: Gateway_042ci2z------*)
+ select
+Flow_0am09oq_finish (?ident2 of ID) 
+[]
+Flow_1m57uqk_finish (?ident2 of ID) 
+end select; Flow_1q6kbg5_begin (?ident1 of ID);scheduler [...](union({ident1}, remove_ids_from_set({ident2}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+(*----  Task with ID: Activity_0yxn8wz------*)
+Flow_1q6kbg5_finish (?ident1 of ID); Flow_0b21o2y_begin (?ident2 of ID);scheduler [...](union({ident2}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+(*----  AndSplitGateway with ID: Gateway_019rnbt------*)
+Flow_0hxtdgl_finish (?ident1 of ID);par
+Flow_06jns5l_begin (?ident2 of ID) 
+||Flow_1s6rirj_begin (?ident3 of ID) 
+end par;scheduler [...](union({ident2,ident3}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+(*----  Task with ID: Activity_1bq5cpr------*)
+Flow_06jns5l_finish (?ident1 of ID); Flow_1ugla8m_begin (?ident2 of ID);scheduler [...](union({ident2}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+(*----  Task with ID: Activity_0ulzvxy------*)
+Flow_1s6rirj_finish (?ident1 of ID); Flow_1vqpcs6_begin (?ident2 of ID);scheduler [...](union({ident2}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+(*----  AndJoinGateway with ID: Gateway_0z53ddp------*)
+Flow_1ugla8m_finish (?ident of ID); scheduler [...](union({}, remove_ids_from_set({}, activeflows)), bpmn, insert(ident, syncstore), mergestore, insert(Gateway_0z53ddp, parstore))
+
+[]
+Flow_1vqpcs6_finish (?ident of ID); scheduler [...](union({}, remove_ids_from_set({}, activeflows)), bpmn, insert(ident, syncstore), mergestore, insert(Gateway_0z53ddp, parstore))
+
+[]
+(*----  Task with ID: Activity_1q6jsaf------*)
+Flow_12tsovj_finish (?ident1 of ID); Flow_1m57uqk_begin (?ident2 of ID);scheduler [...](union({ident2}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+
+(*----------------- Final node ----------------------*)
+Flow_0b21o2y_finish (?ident1 of ID);scheduler [...](union({}, remove_ids_from_set({ident1}, activeflows)), bpmn, syncstore, mergestore, parstore)
+
+[]
+ mergeid := any ID where member(mergeid, mergestore);
+if (is_merge_possible_v2(bpmn,activeflows,mergeid) and is_sync_done(bpmn, activeflows, syncstore, mergeid)) then 
+MoveOn(!mergeid);scheduler [...](union({}, remove_ids_from_set({}, activeflows)), bpmn, syncstore, mergestore, parstore)
+else 
+
+scheduler [Flow_0bx1ubc_begin, Flow_0bx1ubc_finish, Flow_0kohk1o_begin, Flow_0kohk1o_finish, Flow_0iosq71_begin, Flow_0iosq71_finish, Flow_1hlfgv9_begin, Flow_1hlfgv9_finish, Flow_0d5no77_begin, Flow_0d5no77_finish, Flow_018red4_begin, Flow_018red4_finish, Flow_113zrno_begin, Flow_113zrno_finish, Flow_065csqe_begin, Flow_065csqe_finish, Flow_0bkpr52_begin, Flow_0bkpr52_finish, Flow_0a4okos_begin, Flow_0a4okos_finish, Flow_1fx42tr_begin, Flow_1fx42tr_finish, Flow_0am09oq_begin, Flow_0am09oq_finish, Flow_1q6kbg5_begin, Flow_1q6kbg5_finish, Flow_1dism3f_begin, Flow_1dism3f_finish, Flow_0hxtdgl_begin, Flow_0hxtdgl_finish, Flow_06jns5l_begin, Flow_06jns5l_finish, Flow_1s6rirj_begin, Flow_1s6rirj_finish, Flow_1ugla8m_begin, Flow_1ugla8m_finish, Flow_1vqpcs6_begin, Flow_1vqpcs6_finish, Flow_12tsovj_begin, Flow_12tsovj_finish, Flow_1m57uqk_begin, Flow_1m57uqk_finish, Flow_0b21o2y_begin, Flow_0b21o2y_finish, MoveOn] (activeflows, bpmn, syncstore, mergestore, parstore)
+end if
+
+[]
+ mergeid := any ID where member(mergeid, parstore);
+if (is_merge_possible_par(bpmn,syncstore,mergeid)) then 
+select 
+Flow_12tsovj_begin (?ident1 of ID);scheduler [Flow_0bx1ubc_begin, Flow_0bx1ubc_finish, Flow_0kohk1o_begin, Flow_0kohk1o_finish, Flow_0iosq71_begin, Flow_0iosq71_finish, Flow_1hlfgv9_begin, Flow_1hlfgv9_finish, Flow_0d5no77_begin, Flow_0d5no77_finish, Flow_018red4_begin, Flow_018red4_finish, Flow_113zrno_begin, Flow_113zrno_finish, Flow_065csqe_begin, Flow_065csqe_finish, Flow_0bkpr52_begin, Flow_0bkpr52_finish, Flow_0a4okos_begin, Flow_0a4okos_finish, Flow_1fx42tr_begin, Flow_1fx42tr_finish, Flow_0am09oq_begin, Flow_0am09oq_finish, Flow_1q6kbg5_begin, Flow_1q6kbg5_finish, Flow_1dism3f_begin, Flow_1dism3f_finish, Flow_0hxtdgl_begin, Flow_0hxtdgl_finish, Flow_06jns5l_begin, Flow_06jns5l_finish, Flow_1s6rirj_begin, Flow_1s6rirj_finish, Flow_1ugla8m_begin, Flow_1ugla8m_finish, Flow_1vqpcs6_begin, Flow_1vqpcs6_finish, Flow_12tsovj_begin, Flow_12tsovj_finish, Flow_1m57uqk_begin, Flow_1m57uqk_finish, Flow_0b21o2y_begin, Flow_0b21o2y_finish, MoveOn](union({ident1}, remove_incf(bpmn, activeflows, mergeid)), bpmn, remove_sync(bpmn, syncstore, mergeid), mergestore, remove(mergeid, parstore))
+end select 
+else 
+
+scheduler [Flow_0bx1ubc_begin, Flow_0bx1ubc_finish, Flow_0kohk1o_begin, Flow_0kohk1o_finish, Flow_0iosq71_begin, Flow_0iosq71_finish, Flow_1hlfgv9_begin, Flow_1hlfgv9_finish, Flow_0d5no77_begin, Flow_0d5no77_finish, Flow_018red4_begin, Flow_018red4_finish, Flow_113zrno_begin, Flow_113zrno_finish, Flow_065csqe_begin, Flow_065csqe_finish, Flow_0bkpr52_begin, Flow_0bkpr52_finish, Flow_0a4okos_begin, Flow_0a4okos_finish, Flow_1fx42tr_begin, Flow_1fx42tr_finish, Flow_0am09oq_begin, Flow_0am09oq_finish, Flow_1q6kbg5_begin, Flow_1q6kbg5_finish, Flow_1dism3f_begin, Flow_1dism3f_finish, Flow_0hxtdgl_begin, Flow_0hxtdgl_finish, Flow_06jns5l_begin, Flow_06jns5l_finish, Flow_1s6rirj_begin, Flow_1s6rirj_finish, Flow_1ugla8m_begin, Flow_1ugla8m_finish, Flow_1vqpcs6_begin, Flow_1vqpcs6_finish, Flow_12tsovj_begin, Flow_12tsovj_finish, Flow_1m57uqk_begin, Flow_1m57uqk_finish, Flow_0b21o2y_begin, Flow_0b21o2y_finish, MoveOn] (activeflows, bpmn, syncstore, mergestore, parstore)
+end if
+end select
+end var
+end process
+
+
+function p1(): BPROCESS is 
+
+ return proc ( 
+Process_1d98b25,
+{
+	i ( initial(StartEvent_0nonjmw,Flow_0bx1ubc) ),
+	f ( { final(Event_09dry7f,{Flow_0b21o2y}) } ),
+	t ( { task(Activity_0kc9wwe,{Flow_0kohk1o},{Flow_0hxtdgl}),task(Activity_1qxkkp1,{Flow_1hlfgv9},{Flow_0d5no77}),task(Activity_0epqpmr,{Flow_018red4},{Flow_065csqe}),task(Activity_11dyr52,{Flow_113zrno},{Flow_0bkpr52}),task(Activity_0hiyjzm,{Flow_0a4okos},{Flow_1fx42tr}),task(Activity_0yxn8wz,{Flow_1q6kbg5},{Flow_0b21o2y}),task(Activity_1bq5cpr,{Flow_06jns5l},{Flow_1ugla8m}),task(Activity_0ulzvxy,{Flow_1s6rirj},{Flow_1vqpcs6}),task(Activity_1q6jsaf,{Flow_12tsovj},{Flow_1m57uqk}) } ), 
+	g ( { gateway(Gateway_1lv3hhx,split,xor,{Flow_0bx1ubc},{Flow_0kohk1o,Flow_0iosq71}),gateway(Gateway_1fo2bsw,merge,xor,{Flow_0iosq71,Flow_1dism3f},{Flow_1hlfgv9}),gateway(Gateway_1c4j4m7,split,xor,{Flow_0d5no77},{Flow_018red4,Flow_113zrno}),gateway(Gateway_19538cr,merge,xor,{Flow_065csqe,Flow_0bkpr52},{Flow_0a4okos}),gateway(Gateway_0y1348f,split,xor,{Flow_1fx42tr},{Flow_0am09oq,Flow_1dism3f}),gateway(Gateway_042ci2z,merge,xor,{Flow_0am09oq,Flow_1m57uqk},{Flow_1q6kbg5}),gateway(Gateway_019rnbt,split,and,{Flow_0hxtdgl},{Flow_06jns5l,Flow_1s6rirj}),gateway(Gateway_0z53ddp,merge,and,{Flow_1ugla8m,Flow_1vqpcs6},{Flow_12tsovj}) } )
+},
+{ 
+flow(Flow_0bx1ubc,StartEvent_0nonjmw,Gateway_1lv3hhx),flow(Flow_0kohk1o,Gateway_1lv3hhx,Activity_0kc9wwe),flow(Flow_0iosq71,Gateway_1lv3hhx,Gateway_1fo2bsw),flow(Flow_1hlfgv9,Gateway_1fo2bsw,Activity_1qxkkp1),flow(Flow_0d5no77,Activity_1qxkkp1,Gateway_1c4j4m7),flow(Flow_018red4,Gateway_1c4j4m7,Activity_0epqpmr),flow(Flow_113zrno,Gateway_1c4j4m7,Activity_11dyr52),flow(Flow_065csqe,Activity_0epqpmr,Gateway_19538cr),flow(Flow_0bkpr52,Activity_11dyr52,Gateway_19538cr),flow(Flow_0a4okos,Gateway_19538cr,Activity_0hiyjzm),flow(Flow_1fx42tr,Activity_0hiyjzm,Gateway_0y1348f),flow(Flow_0am09oq,Gateway_0y1348f,Gateway_042ci2z),flow(Flow_1q6kbg5,Gateway_042ci2z,Activity_0yxn8wz),flow(Flow_1dism3f,Gateway_0y1348f,Gateway_1fo2bsw),flow(Flow_0hxtdgl,Activity_0kc9wwe,Gateway_019rnbt),flow(Flow_06jns5l,Gateway_019rnbt,Activity_1bq5cpr),flow(Flow_1s6rirj,Gateway_019rnbt,Activity_0ulzvxy),flow(Flow_1ugla8m,Activity_1bq5cpr,Gateway_0z53ddp),flow(Flow_1vqpcs6,Activity_0ulzvxy,Gateway_0z53ddp),flow(Flow_12tsovj,Gateway_0z53ddp,Activity_1q6jsaf),flow(Flow_1m57uqk,Activity_1q6jsaf,Gateway_042ci2z),flow(Flow_0b21o2y,Activity_0yxn8wz,Event_09dry7f)
+}
+)
+end function
+
+
+process MAIN [Activity_0kc9wwe:any, Activity_1qxkkp1:any, Activity_0epqpmr:any, Activity_11dyr52:any, Activity_0hiyjzm:any, Activity_0yxn8wz:any, Activity_1bq5cpr:any, Activity_0ulzvxy:any, Activity_1q6jsaf:any] is
+
+ hide begin:any, finish:any, Flow_0bx1ubc_begin:any, Flow_0bx1ubc_finish:any, Flow_0kohk1o_begin:any, Flow_0kohk1o_finish:any, Flow_0iosq71_begin:any, Flow_0iosq71_finish:any, Flow_1hlfgv9_begin:any, Flow_1hlfgv9_finish:any, Flow_0d5no77_begin:any, Flow_0d5no77_finish:any, Flow_018red4_begin:any, Flow_018red4_finish:any, Flow_113zrno_begin:any, Flow_113zrno_finish:any, Flow_065csqe_begin:any, Flow_065csqe_finish:any, Flow_0bkpr52_begin:any, Flow_0bkpr52_finish:any, Flow_0a4okos_begin:any, Flow_0a4okos_finish:any, Flow_1fx42tr_begin:any, Flow_1fx42tr_finish:any, Flow_0am09oq_begin:any, Flow_0am09oq_finish:any, Flow_1q6kbg5_begin:any, Flow_1q6kbg5_finish:any, Flow_1dism3f_begin:any, Flow_1dism3f_finish:any, Flow_0hxtdgl_begin:any, Flow_0hxtdgl_finish:any, Flow_06jns5l_begin:any, Flow_06jns5l_finish:any, Flow_1s6rirj_begin:any, Flow_1s6rirj_finish:any, Flow_1ugla8m_begin:any, Flow_1ugla8m_finish:any, Flow_1vqpcs6_begin:any, Flow_1vqpcs6_finish:any, Flow_12tsovj_begin:any, Flow_12tsovj_finish:any, Flow_1m57uqk_begin:any, Flow_1m57uqk_finish:any, Flow_0b21o2y_begin:any, Flow_0b21o2y_finish:any, MoveOn:any  in
+par MoveOn, Flow_0bx1ubc_begin, Flow_0bx1ubc_finish, Flow_0kohk1o_begin, Flow_0kohk1o_finish, Flow_0iosq71_begin, Flow_0iosq71_finish, Flow_1hlfgv9_begin, Flow_1hlfgv9_finish, Flow_0d5no77_begin, Flow_0d5no77_finish, Flow_018red4_begin, Flow_018red4_finish, Flow_113zrno_begin, Flow_113zrno_finish, Flow_065csqe_begin, Flow_065csqe_finish, Flow_0bkpr52_begin, Flow_0bkpr52_finish, Flow_0a4okos_begin, Flow_0a4okos_finish, Flow_1fx42tr_begin, Flow_1fx42tr_finish, Flow_0am09oq_begin, Flow_0am09oq_finish, Flow_1q6kbg5_begin, Flow_1q6kbg5_finish, Flow_1dism3f_begin, Flow_1dism3f_finish, Flow_0hxtdgl_begin, Flow_0hxtdgl_finish, Flow_06jns5l_begin, Flow_06jns5l_finish, Flow_1s6rirj_begin, Flow_1s6rirj_finish, Flow_1ugla8m_begin, Flow_1ugla8m_finish, Flow_1vqpcs6_begin, Flow_1vqpcs6_finish, Flow_12tsovj_begin, Flow_12tsovj_finish, Flow_1m57uqk_begin, Flow_1m57uqk_finish, Flow_0b21o2y_begin, Flow_0b21o2y_finish in
+  (* we first generate the scheduler, necessary for keeping track of tokens, and triggering inclusive merge gateways *)
+    scheduler [...](nil, p1(), nil, nil, nil) 
+||
+par    (* synchronizations on all begin/finish flow messages *)
+Flow_0bx1ubc_begin, Flow_0bx1ubc_finish, Flow_0kohk1o_begin, Flow_0kohk1o_finish, Flow_0iosq71_begin, Flow_0iosq71_finish, Flow_1hlfgv9_begin, Flow_1hlfgv9_finish, Flow_0d5no77_begin, Flow_0d5no77_finish, Flow_018red4_begin, Flow_018red4_finish, Flow_113zrno_begin, Flow_113zrno_finish, Flow_065csqe_begin, Flow_065csqe_finish, Flow_0bkpr52_begin, Flow_0bkpr52_finish, Flow_0a4okos_begin, Flow_0a4okos_finish, Flow_1fx42tr_begin, Flow_1fx42tr_finish, Flow_0am09oq_begin, Flow_0am09oq_finish, Flow_1q6kbg5_begin, Flow_1q6kbg5_finish, Flow_1dism3f_begin, Flow_1dism3f_finish, Flow_0hxtdgl_begin, Flow_0hxtdgl_finish, Flow_06jns5l_begin, Flow_06jns5l_finish, Flow_1s6rirj_begin, Flow_1s6rirj_finish, Flow_1ugla8m_begin, Flow_1ugla8m_finish, Flow_1vqpcs6_begin, Flow_1vqpcs6_finish, Flow_12tsovj_begin, Flow_12tsovj_finish, Flow_1m57uqk_begin, Flow_1m57uqk_finish, Flow_0b21o2y_begin, Flow_0b21o2y_finish in
+ par    (* we then generate interleaving of all flow processes *)
+flow [Flow_0bx1ubc_begin, Flow_0bx1ubc_finish] (Flow_0bx1ubc) || flow [Flow_0kohk1o_begin, Flow_0kohk1o_finish] (Flow_0kohk1o) || flow [Flow_0iosq71_begin, Flow_0iosq71_finish] (Flow_0iosq71) || flow [Flow_1hlfgv9_begin, Flow_1hlfgv9_finish] (Flow_1hlfgv9) || flow [Flow_0d5no77_begin, Flow_0d5no77_finish] (Flow_0d5no77) || flow [Flow_018red4_begin, Flow_018red4_finish] (Flow_018red4) || flow [Flow_113zrno_begin, Flow_113zrno_finish] (Flow_113zrno) || flow [Flow_065csqe_begin, Flow_065csqe_finish] (Flow_065csqe) || flow [Flow_0bkpr52_begin, Flow_0bkpr52_finish] (Flow_0bkpr52) || flow [Flow_0a4okos_begin, Flow_0a4okos_finish] (Flow_0a4okos) || flow [Flow_1fx42tr_begin, Flow_1fx42tr_finish] (Flow_1fx42tr) || flow [Flow_0am09oq_begin, Flow_0am09oq_finish] (Flow_0am09oq) || flow [Flow_1q6kbg5_begin, Flow_1q6kbg5_finish] (Flow_1q6kbg5) || flow [Flow_1dism3f_begin, Flow_1dism3f_finish] (Flow_1dism3f) || flow [Flow_0hxtdgl_begin, Flow_0hxtdgl_finish] (Flow_0hxtdgl) || flow [Flow_06jns5l_begin, Flow_06jns5l_finish] (Flow_06jns5l) || flow [Flow_1s6rirj_begin, Flow_1s6rirj_finish] (Flow_1s6rirj) || flow [Flow_1ugla8m_begin, Flow_1ugla8m_finish] (Flow_1ugla8m) || flow [Flow_1vqpcs6_begin, Flow_1vqpcs6_finish] (Flow_1vqpcs6) || flow [Flow_12tsovj_begin, Flow_12tsovj_finish] (Flow_12tsovj) || flow [Flow_1m57uqk_begin, Flow_1m57uqk_finish] (Flow_1m57uqk) || flow [Flow_0b21o2y_begin, Flow_0b21o2y_finish] (Flow_0b21o2y)
+ end par 
+
+||
+ par    (* we finally generate interleaving of all node processes *)
+init [begin,Flow_0bx1ubc_begin] || final [Flow_0b21o2y_finish, finish] || xorsplit_Gateway_1lv3hhx[Flow_0bx1ubc_finish,Flow_0kohk1o_begin,Flow_0iosq71_begin] ||  task_1_1 [Flow_0kohk1o_finish,Activity_0kc9wwe,Flow_0hxtdgl_begin]  ||  task_1_1 [Flow_1hlfgv9_finish,Activity_1qxkkp1,Flow_0d5no77_begin]  || xorjoin_Gateway_1fo2bsw[Flow_0iosq71_finish,Flow_1dism3f_finish,Flow_1hlfgv9_begin] || xorsplit_Gateway_1c4j4m7[Flow_0d5no77_finish,Flow_018red4_begin,Flow_113zrno_begin] ||  task_1_1 [Flow_018red4_finish,Activity_0epqpmr,Flow_065csqe_begin]  ||  task_1_1 [Flow_113zrno_finish,Activity_11dyr52,Flow_0bkpr52_begin]  || xorjoin_Gateway_19538cr[Flow_065csqe_finish,Flow_0bkpr52_finish,Flow_0a4okos_begin] ||  task_1_1 [Flow_0a4okos_finish,Activity_0hiyjzm,Flow_1fx42tr_begin]  || xorsplit_Gateway_0y1348f[Flow_1fx42tr_finish,Flow_0am09oq_begin,Flow_1dism3f_begin] || xorjoin_Gateway_042ci2z[Flow_0am09oq_finish,Flow_1m57uqk_finish,Flow_1q6kbg5_begin] ||  task_1_1 [Flow_1q6kbg5_finish,Activity_0yxn8wz,Flow_0b21o2y_begin]  || andsplit_Gateway_019rnbt[Flow_0hxtdgl_finish,Flow_06jns5l_begin,Flow_1s6rirj_begin] ||  task_1_1 [Flow_06jns5l_finish,Activity_1bq5cpr,Flow_1ugla8m_begin]  ||  task_1_1 [Flow_1s6rirj_finish,Activity_0ulzvxy,Flow_1vqpcs6_begin]  || andjoin_Gateway_0z53ddp[Flow_1ugla8m_finish,Flow_1vqpcs6_finish,Flow_12tsovj_begin] ||  task_1_1 [Flow_12tsovj_finish,Activity_1q6jsaf,Flow_1m57uqk_begin] 
+ end par 
+ end par
+ end par
+ end hide
+
+end process
+
+
+end module

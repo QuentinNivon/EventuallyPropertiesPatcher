@@ -1,0 +1,18 @@
+
+module ex2 is
+
+process main [INIT, EXEC,
+DONE, LOG : any] is
+  INIT ;
+  par
+    select
+      LOG [] EXEC
+    end select
+  ||
+    select
+      LOG [] DONE
+    end select
+  end par
+end process
+
+end module

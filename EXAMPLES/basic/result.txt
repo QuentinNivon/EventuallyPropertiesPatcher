@@ -1,0 +1,15 @@
+Error: Process_1d98b25.daut already exists in /home/quentin/Documents/debugging/liveness_talks/tests_proto/basic.
+Generated CLTS is semantically correct: True
+The file |Process_1d98b25.fautx| already exists in the current directory and the overwriting permission has not been given.
+
+1 patch was found for the current specification.
+Patch found:
+
+- Transitions to patch: ACTIVITY_0KC9WWE
+--------------------------------------------------
+Process execution time: 0.0006299018859863281s
+    - Parsing time: 0.0002982616424560547s
+    - Computing CLTS time: 0.0002522468566894531s
+    - Writing CLTS to file time: 2.6941299438476562e-05s
+    - Computing ART, FRT, URT time: 1.6450881958007812e-05s
+    - Patching time: 0.0002982616424560547s
